@@ -12,20 +12,20 @@ export class Base {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("int")
-  createdAt: number;
+  @Column("date")
+  createdAt: Date;
 
-  @Column("int")
-  updatedAt: number;
+  @Column("date")
+  updatedAt: Date;
 
   @BeforeInsert()
   setTimestamps() : void {
-    this.createdAt = this.updatedAt = new Date().getTime()
+    this.createdAt = this.updatedAt = new Date();
   }
 
   @BeforeUpdate()
   updateTimestamps() : void {
-    this.updatedAt = new Date().getTime();
+    this.updatedAt = new Date();
   }
 
 }
