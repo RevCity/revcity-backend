@@ -2,11 +2,14 @@ import * as http from 'http';
 import * as debug from 'debug';
 
 import ExpressApp from './App';
+import db from './db/Db';
 
 debug('revcity-backend:server');
 
 const port = normalizePort(process.env.PORT || 8000);
 ExpressApp.set('port', port);
+
+db.then(connection => {}).catch(error => console.log(error));
 
 const server = http.createServer(ExpressApp);
 server.listen(port);
