@@ -45,8 +45,7 @@ export class User extends Base {
         this.gender = Constants.OTHER;
         break;
       default:
-        throw new Error("Unrecognized gender expression - " +
-          "please specify 'male', 'female', or 'other'");
+        throw new Error("Unrecognized gender expression");
     }
   }
 

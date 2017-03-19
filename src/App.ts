@@ -6,6 +6,9 @@ import * as passport from 'passport';
 import * as path from 'path';
 import * as logger from 'morgan';
 
+/* All routes */
+import UsersRouter from './routes/Users';
+
 class App {
 
   public express: express.Application;
@@ -27,7 +30,7 @@ class App {
   }
 
   private routes(): void {
-    // TODO
+    this.express.use('/users/', UsersRouter); 
   }
 
 }
