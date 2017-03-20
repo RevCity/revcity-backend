@@ -1,6 +1,6 @@
 import {Router, Request, Response, NextFunction} from 'express';
 import * as util from 'util';
-import * as fb from 'fb';
+import * as FB from 'fb';
 
 class UsersRouter {
 
@@ -14,7 +14,7 @@ class UsersRouter {
   public fbLogin(req: Request, res: Response, next: NextFunction) {
     const fields = ['id', 'name', 'email', 'picture.type(large)'];
     const token = req.param("accessToken");
-    fb.api('me', { fields: fields, access_token: token }, r => {
+    FB.api('me', { fields: fields, access_token: token }, r => {
       res.json(r);
     });
   }

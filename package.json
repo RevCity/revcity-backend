@@ -6,6 +6,7 @@
     "start": "node dist/start.js"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/bluebird": "^3.0.37",
     "@types/body-parser": "0.0.34",
     "@types/chai": "^3.4.35",
