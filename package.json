@@ -38,6 +38,7 @@
     "express": "^4.14.1",
     "facebook-events-by-location-core": "^0.1.5",
     "fb": "^1.1.1",
+    "googleapis": "^18.0.0",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
     "passport": "^0.3.2",
