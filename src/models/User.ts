@@ -1,51 +1,52 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
-import {Base} from "./Base";
-import {Constants} from "../utils/Constants";
+import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import {Base} from './Base';
+import {Constants} from '../utils/Constants';
 
-@Entity("users")
+@Entity('users')
 export class User extends Base {
 
-  @Column("string")
+  @Column('string')
   facebookId: string;
 
-  @Column("string")
+  @Column('string')
   googleId: string;
 
-  @Column("string")
+  @Column('string')
   email: string;
 
-  @Column("string")
+  @Column('string')
   firstName: string;
 
-  @Column("string")
+  @Column('string')
   lastName: string;
 
-  @Column("string")
+  @Column('string')
   imageUrl: string;
 
-  @Column("int")
+  @Column('int')
   phone: number;
 
-  @Column("date")
+  @Column('date')
   birthday: Date;
 
-  @Column("string", { length: 1 })
+  @Column('string', { length: 1 })
   gender: string // 'm' = male, 'f' = female, 'o' = other
 
+  
 
   setGender(gender : string) : void {
     switch(gender) {
-      case "female":
+      case 'female':
         this.gender = Constants.FEMALE;
         break;
-      case "male":
+      case 'male':
         this.gender = Constants.MALE;
         break;
-      case "other":
+      case 'other':
         this.gender = Constants.OTHER;
         break;
       default:
-        throw new Error("Unrecognized gender expression");
+        throw new Error('Unrecognized gender expression');
     }
   }
 
