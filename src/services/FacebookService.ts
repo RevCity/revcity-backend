@@ -36,6 +36,9 @@ export class FacebookService {
     const fields = ['id', 'name', 'email', 'picture.type(large)'];
     let getMe : Promise<any> = new Promise((resolve, reject) => {
       FB.api('me', { fields: fields, access_token: token}, (data) => {
+        if (data && data.error) {
+          reject(data); 
+        }
         resolve(data);
       });
     });
