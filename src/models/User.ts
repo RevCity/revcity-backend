@@ -32,8 +32,25 @@ export class User extends Base {
   @Column('string', { length: 1 })
   gender: string // 'm' = male, 'f' = female, 'o' = other
 
-  
+  /** User from Native Sign Up **/
+  static fromNativeSignUp() : User {
+    // TODO
+    return null;
+  }
 
+  /** User from Google Sign Up **/
+  static fromGoogleSignUp() : User {
+    // TODO
+    return null;
+  }
+
+  /** User from Facebook Sign Up **/
+  static fromFBSignUp(): User {
+    // TODO
+    return null;
+  }
+
+  /** Set this user's gender **/
   setGender(gender : string) : void {
     switch(gender) {
       case 'female':
@@ -49,6 +66,5 @@ export class User extends Base {
         throw new Error('Unrecognized gender expression');
     }
   }
-
 
 }

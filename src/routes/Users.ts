@@ -1,7 +1,8 @@
 import {Router, Request, Response, NextFunction} from 'express';
 import * as util from 'util';
-import * as FB from 'fb';
 import * as Google from 'googleapis';
+import * as FB from 'fb';
+import FacebookService from '../services/FacebookService';
 
 class UsersRouter {
 
@@ -21,11 +22,11 @@ class UsersRouter {
 
   /** Facebook Login **/
   public fbLogin(req: Request, res: Response, next: NextFunction) {
-    const fields = ['id', 'name', 'email', 'picture.type(large)'];
-    const token = req.param("accessToken");
-    FB.api('me', { fields: fields, access_token: token }, r => {
-      res.json(r);
-    });
+    const token = req.query.token;
+    FacebookService.getInstance().getUserFromIdToken(token)
+      .then(r => {
+        res.json(r); // TODO - see below
+      }); // then store, then respond to the user
   }
 
   /** Google Login **/
