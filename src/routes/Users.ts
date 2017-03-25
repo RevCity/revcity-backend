@@ -1,8 +1,8 @@
 import {Router, Request, Response, NextFunction} from 'express';
 import * as util from 'util';
 import * as Google from 'googleapis';
-import * as FB from 'fb';
 import FacebookService from '../services/FacebookService';
+import GoogleService from '../services/GoogleService';
 
 class UsersRouter {
 
@@ -23,7 +23,7 @@ class UsersRouter {
   /** Facebook Login **/
   public fbLogin(req: Request, res: Response, next: NextFunction) {
     const token = req.query.token;
-    FacebookService.getInstance().getUserFromIdToken(token)
+    FacebookService.getInstance().getUserFromToken(token)
       .then(r => {
         res.json(r); // TODO - see below
       }); // then store, then respond to the user
@@ -31,34 +31,13 @@ class UsersRouter {
 
   /** Google Login **/
   public googleLogin(req: Request, res: Response, next:  NextFunction) {
-
-    // OAuth2 client for the app
-    let oauth2Client = new Google.auth.OAuth2(
-      process.env.GOOGLE_CLIENT_ID,
-      process.env.GOOGLE_SECRET_KEY,
-      process.env.GOOGLE_REDIRECT_URI
-    );
-
-    // Grab the id_token from the request
-    let token = req.param('idToken');
-
-    // Set the credential via the OAuth client
-    oauth2Client.setCredentials({
-      access_token: token
-    });
-
-    // Grab the person
-    Google.plus('v1').people.get({
-      userId: 'me',
-      auth: oauth2Client
-    }, (err, resp) => {
-      if (err) {
-        res.json(err);
-      } else {
-        res.json(resp);
-      }
-    });
+    const token = req.query.token;
+    GoogleService.getInstance().getUserFromToken(token)
+      .then(r => {
+        res.json(r); // TODO - see below
+      }); // then store, then respond to the user
   }
+  
 }
 
 const usersRouter = new UsersRouter();

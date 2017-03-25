@@ -31,8 +31,8 @@ export class FacebookService {
     });
   }
 
-  /** Get User From ID Token **/
-  public getUserFromIdToken(token: string) : Promise<FacebookSignInResult> {
+  /** Get FB User From Token **/
+  public getUserFromToken(token: string) : Promise<FacebookSignInResult> {
     const fields = ['id', 'name', 'email', 'picture.type(large)'];
     let getMe : Promise<any> = new Promise((resolve, reject) => {
       FB.api('me', { fields: fields, access_token: token}, (data) => {
