@@ -1,13 +1,20 @@
-import {Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
-import {Base} from './Base';
-import {Constants} from '../utils/Constants';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne
+} from 'typeorm';
 import * as Promise from 'bluebird';
 import * as Password from 'password-hash-and-salt';
+import {Base} from './Base';
+import {Safe} from './Safe';
+import {Session} from './Session';
+import {Constants} from '../utils/Constants';
 import {FacebookSignInResult} from '../schemas/FacebookSignInResult';
 import {GoogleSignInResult} from '../schemas/GoogleSignInResult';
 
 @Entity('users')
-export class User extends Base {
+export class User extends Base implements Safe {
 
   @Column('string', {
     nullable: true,
@@ -60,6 +67,9 @@ export class User extends Base {
     default: null
    })
   passwordDigest: string;
+
+  @OneToOne(type => Session, s => s.user)
+  session: Session;
 
   /** User from Native Sign Up **/
   public static fromNativeSignUp() : User {
@@ -115,6 +125,30 @@ export class User extends Base {
         throw new Error('Unrecognized gender expression');
     }
     return Promise.resolve(this);
+  }
+
+
+  /** Set the user's session **/
+  setSession(session : Session) : Promise<User> {
+    this.session = session;
+    return Promise.resolve(this);
+  }
+
+
+  /** Safe Json **/
+  safeJson() : any {
+    let result = this.copy();
+    delete result.passwordDigest;
+    return result;
+  }
+
+  /** Limited Json **/
+  limitedJson() : any {
+    let result = this.safeJson();
+    delete result.birthday;
+    delete result.email;
+    delete result.phone;
+    delete result.session;
   }
 
 }

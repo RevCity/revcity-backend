@@ -1,13 +1,13 @@
 import * as Promise from 'bluebird';
 import * as passport from 'passport';
 import * as util from 'util';
+import * as CustomStrategy from 'passport-custom';
+import * as BasicStrategy from 'passport-http';
 import {getConnectionManager} from 'typeorm';
 import {FacebookService} from '../services/FacebookService';
 import {GoogleService} from '../services/GoogleService';
 import {User} from '../models/User';
 import {Constants} from '../utils/Constants';
-import * as CustomStrategy from 'passport-custom';
-import * as BasicStrategy from 'passport-http';
 
 /**
  * Establishes all passport authentication wrappers
@@ -24,7 +24,7 @@ export class Authentication {
     // Necessary
     this.addSerializeUser();
     this.addDeserializeUser();
-    this.addHttpBasic();
+    this.addLocalSignIn();
     this.addGoogleSignIn();
     this.addFacebookSignIn();
     this.addTokenSession();
@@ -47,14 +47,14 @@ export class Authentication {
   }
 
 
-  /** Creates Http Basic Authentication strategy for Passport **/
-  public static addHttpBasic() : void {
+  /** Creates local sign IN strategy (Http Basic + form submission) **/
+  public static addLocalSignIn() : void {
 
   }
 
 
   /** Creates Custom Authentication for Google Sign In **/
-  public static addGoogleSignIn() : void {var CustomStrategy = require('passport-custom');
+  public static addGoogleSignIn() : void {
     let db = getConnectionManager().get().getRepository(User);
     passport.use(Constants.GOOGLE_SIGN_IN_STRATEGY, new CustomStrategy((req, done) => {
       GoogleService.getInstance().getUserFromToken(req.query.token)

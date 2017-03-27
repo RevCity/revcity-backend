@@ -6,12 +6,13 @@ import {
   JoinColumn
 } from 'typeorm';
 import {Base} from './Base';
+import {Safe} from './Safe';
 import {User} from './User';
 import {Constants} from '../utils/Constants';
 import * as Crypto from 'crypto';
 
 @Entity('sessions')
-export class Session extends Base {
+export class Session extends Base implements Safe  {
 
   @Column('string')
   sessionToken: string;
@@ -59,6 +60,11 @@ export class Session extends Base {
   updateSession() : Session {
     this.assignCreds();
     return this;
+  }
+
+  /** Safe Json **/
+  safeJson() : any {
+    return this.copy();
   }
 
 }
