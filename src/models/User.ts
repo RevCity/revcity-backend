@@ -3,8 +3,8 @@ import {Base} from './Base';
 import {Constants} from '../utils/Constants';
 import * as Promise from 'bluebird';
 import * as Password from 'password-hash-and-salt';
-import FacebookSignInResult from '../schemas/FacebookSignInResult';
-import GoogleSignInResult from '../schemas/GoogleSignInResult';
+import {FacebookSignInResult} from '../schemas/FacebookSignInResult';
+import {GoogleSignInResult} from '../schemas/GoogleSignInResult';
 
 @Entity('users')
 export class User extends Base {
@@ -118,5 +118,3 @@ export class User extends Base {
   }
 
 }
-
-export default User;

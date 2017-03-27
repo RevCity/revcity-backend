@@ -5,5 +5,3 @@ export interface FacebookSignInResult {
   email?:     string;
   picture?:   string;
 }
-
-export default FacebookSignInResult;

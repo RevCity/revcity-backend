@@ -1,6 +1,6 @@
 import * as FB from 'fb';
 import * as Promise from 'bluebird';
-import FacebookSignInResult from '../schemas/FacebookSignInResult';
+import {FacebookSignInResult} from '../schemas/FacebookSignInResult';
 
 export class FacebookService {
 
@@ -48,5 +48,3 @@ export class FacebookService {
   // TODO - other fb operations
 
 }
-
-export default FacebookService;

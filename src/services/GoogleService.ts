@@ -1,6 +1,6 @@
 import * as Google from 'googleapis';
 import * as Promise from 'bluebird';
-import GoogleSignInResult from '../schemas/GoogleSignInResult';
+import {GoogleSignInResult} from '../schemas/GoogleSignInResult';
 
 export class GoogleService {
 
@@ -46,5 +46,3 @@ export class GoogleService {
   }
 
 }
-
-export default GoogleService;

@@ -6,5 +6,3 @@ export interface GoogleSignInResult {
   familyName?: string;
   picture?:    string;
 }
-
-export default GoogleSignInResult; 
