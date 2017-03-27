@@ -1,0 +1,69 @@
+# RevCity
+RevCity API docs
+
+# Group Users
+## Google Sign In [/users/google?token={token}]
+### Google Sign In [POST]
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "user": {
+              "id": 1,
+              "facebookId": "12345-f",
+              "googleId": "12345-g",
+              "email": "john.doe@gmail.com",
+              "name": "John Doe",
+              "imageUrl": "https://goo.gl/QRSjVU",
+              "phone": 1234567890,
+              "birthday": "2017-03-26T04:00:00.000Z",
+              "gender": "m",
+              "createdAt": "2017-03-26T04:00:00.000Z",
+              "updatedAt": "2017-03-26T04:00:00.000Z",
+              "session": {
+                "sessionToken": "long-session-token",
+                "expiresAt": "2017-03-26T04:00:00.000Z",
+                "updatedToken": "my-long-update-token",
+                "isActive": true,
+                "createdAt": "2017-03-26T04:00:00.000Z",
+                "updatedAt": "2017-03-26T04:00:00.000Z"
+              }
+            },
+            "newUser": true
+          },
+          "success": true
+        }
+
+
+## Facebook Sign In [/users/fb?token={token}]
+### Facebook Sign In [POST]
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "user": {
+              "id": 1,
+              "facebookId": "12345-f",
+              "googleId": "12345-g",
+              "email": "john.doe@gmail.com",
+              "name": "John Doe",
+              "imageUrl": "https://goo.gl/QRSjVU",
+              "phone": 1234567890,
+              "birthday": "2017-03-26T04:00:00.000Z",
+              "gender": "m",
+              "createdAt": "2017-03-26T04:00:00.000Z",
+              "updatedAt": "2017-03-26T04:00:00.000Z",
+              "session": {
+                "sessionToken": "long-session-token",
+                "expiresAt": "2017-03-26T04:00:00.000Z",
+                "updatedToken": "my-long-update-token",
+                "isActive": true,
+                "createdAt": "2017-03-26T04:00:00.000Z",
+                "updatedAt": "2017-03-26T04:00:00.000Z"
+              }
+            },
+            "newUser": true
+          },
+          "success": true
+        }

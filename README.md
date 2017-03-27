@@ -13,3 +13,7 @@ GOOGLE_REDIRECT_URL
 FB_APP_ID
 FB_APP_SECRET
 ````
+
+## API Documentation
+
+Found [`here`](http://docs.revcity.apiary.io/#reference/users/google-sign-in/google-sign-in)
