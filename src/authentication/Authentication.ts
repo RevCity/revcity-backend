@@ -64,6 +64,7 @@ export class Authentication {
             .setParameter("googleId", resp.googleId)
             .getOne()
             .then(user => {
+              req.newUser = user !== undefined;
               return user ? Promise.resolve(user) : db.persist(User.fromGoogleSignUp(resp));
             })
             .then(user => {
@@ -85,6 +86,7 @@ export class Authentication {
             .setParameter("facebookId", resp.facebookId)
             .getOne()
             .then(user => {
+              req.newUser = user !== undefined;
               return user ? Promise.resolve(user) : db.persist(User.fromFBSignUp(resp));
             })
             .then(user => {

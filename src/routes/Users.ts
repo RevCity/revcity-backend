@@ -2,6 +2,7 @@ import {Router, Request, Response, NextFunction} from 'express';
 import * as util from 'util';
 import * as passport from 'passport';
 import {Constants} from '../utils/Constants';
+import {Success} from '../schemas/Success';
 
 export class UsersRouter {
 
@@ -31,13 +32,19 @@ export class UsersRouter {
   }
 
   /** Facebook Login **/
-  public fbLogin(req: Request, res: Response, next: NextFunction) {
-    res.json(req.user);
+  public fbLogin(req: any, res: Response, next: NextFunction) {
+    let result =
+      new Success(Constants.USER, req.user)
+      .add(Constants.NEW_USER, req.newUser)
+    res.json(result);
   }
 
   /** Google Login **/
-  public googleLogin(req: Request, res: Response, next: NextFunction) {
-    res.json(req.user);
+  public googleLogin(req: any, res: Response, next: NextFunction) {
+    let result =
+      new Success(Constants.USER, req.user)
+      .add(Constants.NEW_USER, req.user);
+    res.json(result);
   }
 
   /** Local Login (Http Digest) **/
