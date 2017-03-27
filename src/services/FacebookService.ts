@@ -37,7 +37,7 @@ export class FacebookService {
     let getMe : Promise<any> = new Promise((resolve, reject) => {
       FB.api('me', { fields: fields, access_token: token}, (data) => {
         if (data && data.error) {
-          reject(data); 
+          reject(data);
         }
         resolve(data);
       });

@@ -62,3 +62,5 @@ export class Session extends Base {
   }
 
 }
+
+export default Session; 

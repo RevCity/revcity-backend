@@ -3,56 +3,88 @@ import {Base} from './Base';
 import {Constants} from '../utils/Constants';
 import * as Promise from 'bluebird';
 import * as Password from 'password-hash-and-salt';
+import FacebookSignInResult from '../schemas/FacebookSignInResult';
+import GoogleSignInResult from '../schemas/GoogleSignInResult';
 
 @Entity('users')
 export class User extends Base {
 
-  @Column('string')
+  @Column('string', {
+    nullable: true,
+    default: null
+  })
   facebookId: string;
 
-  @Column('string')
+  @Column('string', {
+    nullable: true,
+    default: null
+  })
   googleId: string;
 
-  @Column('string')
+  @Column('string', {
+    default: ''
+  })
   email: string;
 
-  @Column('string')
-  firstName: string;
+  @Column('string', {
+    default: ''
+  })
+  name: string;
 
-  @Column('string')
-  lastName: string;
-
-  @Column('string')
+  @Column('string', {
+    default: ''
+  })
   imageUrl: string;
 
-  @Column('int')
+  @Column('int', {
+    nullable: true,
+    default: null
+  })
   phone: number;
 
-  @Column('date')
+  @Column('date', {
+    nullable: true,
+    default: null
+  })
   birthday: Date;
 
-  @Column('string', { length: 1 })
+  @Column('string', {
+    length: 1,
+    nullable: true,
+    default: null
+  })
   gender: string // 'm' = male, 'f' = female, 'o' = other
 
-  @Column('string')
+  @Column('string', {
+    nullable: true,
+    default: null
+   })
   passwordDigest: string;
 
   /** User from Native Sign Up **/
-  static fromNativeSignUp() : User {
+  public static fromNativeSignUp() : User {
     // TODO
     return null;
   }
 
   /** User from Google Sign Up **/
-  static fromGoogleSignUp() : User {
-    // TODO
-    return null;
+  public static fromGoogleSignUp(googleResult : GoogleSignInResult) : User {
+    let u = new User();
+    u.googleId = googleResult.googleId;
+    u.email = googleResult.email;
+    u.name = googleResult.givenName + ' ' + googleResult.familyName;
+    u.imageUrl = googleResult.picture;
+    return u;
   }
 
   /** User from Facebook Sign Up **/
-  static fromFBSignUp(): User {
-    // TODO
-    return null;
+  public static fromFBSignUp(facebookResult : FacebookSignInResult): User {
+    let u = new User();
+    u.facebookId = facebookResult.facebookId;
+    u.email = facebookResult.email;
+    u.name = facebookResult.name;
+    u.imageUrl = facebookResult.picture;
+    return u;
   }
 
   /** Set user's password digest **/
@@ -86,3 +118,5 @@ export class User extends Base {
   }
 
 }
+
+export default User;

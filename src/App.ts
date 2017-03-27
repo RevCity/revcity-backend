@@ -6,8 +6,11 @@ import * as passport from 'passport';
 import * as path from 'path';
 import * as logger from 'morgan';
 
+/* Authentication garbage */
+import {Authentication} from './authentication/Authentication';
+
 /* All routes */
-import UsersRouter from './routes/Users';
+import {UsersRouter} from './routes/Users';
 
 class App {
 
@@ -18,6 +21,7 @@ class App {
     this.express = express();
     this.middleware();
     this.routes();
+    Authentication.setupPassport();
   }
 
   private middleware(): void {
@@ -30,9 +34,9 @@ class App {
   }
 
   private routes(): void {
-    this.express.use('/users/', UsersRouter);
+    this.express.use('/users/', new UsersRouter().router);
   }
 
 }
 
-export default new App().express;
+export default App;
