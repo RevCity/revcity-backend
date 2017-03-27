@@ -18,6 +18,11 @@ export class UsersRouter {
   init() {
 
     this.router.post(
+      '/local/new',
+      this.localSignUp
+    )
+
+    this.router.post(
       '/fb',
       passport.authenticate(Constants.FB_SIGN_IN_STRATEGY),
       this.fbSignIn
@@ -28,11 +33,6 @@ export class UsersRouter {
       passport.authenticate(Constants.GOOGLE_SIGN_IN_STRATEGY),
       this.googleSignIn
     );
-
-    this.router.post(
-      '/local/new',
-      this.localSignUp
-    )
 
     this.router.post(
       '/local',
