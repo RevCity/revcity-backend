@@ -146,6 +146,7 @@ export class User extends Base implements JsonScope {
     delete result.email;
     delete result.phone;
     delete result.session;
+    return result; 
   }
 
 }

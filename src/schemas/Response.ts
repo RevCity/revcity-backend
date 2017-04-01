@@ -1,5 +1,3 @@
 export abstract class Response {
-
-  success: boolean; 
-
+  success: boolean;
 }

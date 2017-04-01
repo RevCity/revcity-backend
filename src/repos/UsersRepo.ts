@@ -42,6 +42,19 @@ export class UsersRepo {
     }) as Promise<User>;
   }
 
+  /** Get user by Id **/
+  public getUserById(id: number) : Promise<User> {
+    return new Promise((resolve, reject) => {
+      this.db.findOneById(id)
+        .then(user => {
+          resolve(user);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    }) as Promise<User>;
+  }
+
   /** Get user by Google Id (plus join on session) **/
   public getUserByGoogleId(googleId: string) : Promise<User> {
     return new Promise((resolve, reject) => {
@@ -49,7 +62,6 @@ export class UsersRepo {
         .where("user.googleId = :googleId", { googleId: googleId })
         .getOne()
         .then(user => {
-          console.log(user);
           resolve(user);
         })
         .catch(err => {
@@ -65,7 +77,6 @@ export class UsersRepo {
         .where("user.facebookId = :facebookId", { facebookId: facebookId })
         .getOne()
         .then(user => {
-          console.log(user);
           resolve(user);
         })
         .catch(err => {
