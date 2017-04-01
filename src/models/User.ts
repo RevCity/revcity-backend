@@ -5,6 +5,8 @@ import {
   OneToOne,
   Embedded
 } from 'typeorm';
+import {Skip} from "serializer.ts/Decorators";
+import {serialize} from "serializer.ts/Serializer";
 import * as Promise from 'bluebird';
 import * as Password from 'password-hash-and-salt';
 import {Base} from './Base';
@@ -66,6 +68,7 @@ export class User extends Base implements JsonScope {
   })
   gender: string // 'm' = male, 'f' = female, 'o' = other
 
+  @Skip()
   @Column('string', {
     nullable: true,
     default: null
@@ -73,7 +76,7 @@ export class User extends Base implements JsonScope {
   passwordDigest: string;
 
   @Embedded(type => Session)
-  session: Session;
+  private session: Session;
 
   /** User from Native Sign Up **/
   public static fromNativeSignUp() : User {
@@ -132,21 +135,22 @@ export class User extends Base implements JsonScope {
     return Promise.resolve(this);
   }
 
-  /** Safe Json **/
-  safeJson() : any {
-    let result = JSON.parse(JSON.stringify(this));
-    delete result.passwordDigest;
-    return result;
+  /** Update session **/
+  updateSession() : Promise<User> {
+    return new Promise((resolve, reject) => {
+      this.session.update();
+      resolve(this);
+    }) as Promise<User>;
   }
 
   /** Limited Json **/
   limitedJson() : any {
-    let result = this.safeJson();
+    let result = serialize(this);
     delete result.birthday;
     delete result.email;
     delete result.phone;
     delete result.session;
-    return result; 
+    return result;
   }
 
 }

@@ -33,8 +33,11 @@ export class UsersRepo {
   /** Update the user session **/
   public updateUserSession(user: User) : Promise<User> {
     return new Promise((resolve, reject) => {
-      user.session.update();
-      this.db.persist(user).then(user => {
+      user.updateSession()
+      .then(user => {
+        return this.db.persist(user);
+      })
+      .then(user => {
         resolve(user);
       }).catch(err => {
         reject(err);

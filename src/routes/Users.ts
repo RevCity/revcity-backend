@@ -51,15 +51,15 @@ export class UsersRouter {
 
   /** Facebook Sign In (req is `any` b/c newUser info attached in passport) **/
   public fbSignIn(req: any, res: Response, next: NextFunction) {
-    let result = new Success(Constants.USER, req.user.safeJson())
-                    .add(Constants.NEW_USER, req.newUser)
+    let result = new Success(Constants.USER, req.user)
+      .add(Constants.NEW_USER, req.newUser)
     res.json(result);
   }
 
   /** Google Sign In (req is `any` b/c newUser info attached in passport) **/
   public googleSignIn(req: any, res: Response, next: NextFunction) {
-    let result = new Success(Constants.USER, req.user.safeJson())
-                    .add(Constants.NEW_USER, req.newUser);
+    let result = new Success(Constants.USER, req.user)
+      .add(Constants.NEW_USER, req.newUser);
     res.json(result);
   }
 

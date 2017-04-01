@@ -27,7 +27,6 @@ export class Session {
   /** Constructor **/
   constructor() {
     this.assignCreds();
-    this.isActive = true;
   }
 
   /** Generates a session / update token **/
@@ -43,6 +42,7 @@ export class Session {
 
   /** Assigns `sessionToken`, `expiresAt`, and `updateToken` **/
   private assignCreds() : void {
+    this.isActive = true;
     this.sessionToken = this.generateToken();
     this.expiresAt = this.expTime();
     this.updateToken = this.generateToken();
@@ -52,6 +52,12 @@ export class Session {
   update() : Session {
     this.assignCreds();
     return this;
+  }
+
+  /** Log out **/
+  logOut() : Session {
+    this.isActive = false;
+    return this; 
   }
 
 }

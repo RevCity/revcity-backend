@@ -45,6 +45,7 @@
     "passport": "^0.3.2",
     "passport-custom": "^1.0.5",
     "passport-http": "^0.3.0",
+    "serializer.ts": "0.0.12",
     "typeorm": "0.0.9"
   }
 }

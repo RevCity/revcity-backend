@@ -5,7 +5,6 @@ import {
   BeforeInsert,
   BeforeUpdate
 } from "typeorm";
-import {Safe} from './Safe';
 
 @AbstractEntity()
 export class Base {
@@ -24,10 +23,6 @@ export class Base {
   @BeforeUpdate()
   updateTimestamps() : void {
     this.updatedAt = new Date();
-  }
-
-  copy() {
-    return JSON.parse(JSON.stringify(this));
   }
 
 }
