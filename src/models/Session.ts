@@ -57,7 +57,7 @@ export class Session extends Base implements Safe  {
   }
 
   /** Updates this session and returns itself **/
-  updateSession() : Session {
+  update() : Session {
     this.assignCreds();
     return this;
   }
@@ -65,6 +65,11 @@ export class Session extends Base implements Safe  {
   /** Safe Json **/
   safeJson() : any {
     return this.copy();
+  }
+
+  /** Limited Json **/
+  limitedJson() : any {
+    return this.safeJson();
   }
 
 }
