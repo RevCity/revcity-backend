@@ -1,18 +1,16 @@
 import {
-  Entity,
+  EmbeddableEntity,
   Column,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToOne,
   JoinColumn
 } from 'typeorm';
 import {Base} from './Base';
-import {Safe} from './Safe';
-import {User} from './User';
 import {Constants} from '../utils/Constants';
 import * as Crypto from 'crypto';
 
-@Entity('sessions')
-export class Session extends Base implements Safe  {
+@EmbeddableEntity()
+export class Session {
 
   @Column('string')
   sessionToken: string;
@@ -26,16 +24,10 @@ export class Session extends Base implements Safe  {
   @Column('boolean')
   isActive: boolean;
 
-  @OneToOne(type => User)
-  @JoinColumn()
-  user: User;
-
   /** Constructor **/
-  constructor(user : User) {
-    super();
+  constructor() {
     this.assignCreds();
     this.isActive = true;
-    this.user = user;
   }
 
   /** Generates a session / update token **/
@@ -60,16 +52,6 @@ export class Session extends Base implements Safe  {
   update() : Session {
     this.assignCreds();
     return this;
-  }
-
-  /** Safe Json **/
-  safeJson() : any {
-    return this.copy();
-  }
-
-  /** Limited Json **/
-  limitedJson() : any {
-    return this.safeJson();
   }
 
 }

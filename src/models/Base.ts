@@ -10,9 +10,6 @@ import {Safe} from './Safe';
 @AbstractEntity()
 export class Base {
 
-  @PrimaryGeneratedColumn()
-  id: number;
-
   @Column("date")
   createdAt: Date;
 
@@ -32,7 +29,5 @@ export class Base {
   copy() {
     return JSON.parse(JSON.stringify(this));
   }
-
-
 
 }

@@ -2,19 +2,23 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne
+  OneToOne,
+  Embedded
 } from 'typeorm';
 import * as Promise from 'bluebird';
 import * as Password from 'password-hash-and-salt';
 import {Base} from './Base';
-import {Safe} from './Safe';
+import {JsonScope} from './JsonScope';
 import {Session} from './Session';
 import {Constants} from '../utils/Constants';
 import {FacebookSignInResult} from '../schemas/FacebookSignInResult';
 import {GoogleSignInResult} from '../schemas/GoogleSignInResult';
 
 @Entity('users')
-export class User extends Base implements Safe {
+export class User extends Base implements JsonScope {
+
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column('string', {
     nullable: true,
@@ -68,7 +72,7 @@ export class User extends Base implements Safe {
    })
   passwordDigest: string;
 
-  @OneToOne(type => Session, s => s.user)
+  @Embedded(type => Session)
   session: Session;
 
   /** User from Native Sign Up **/
@@ -84,6 +88,7 @@ export class User extends Base implements Safe {
     u.email = googleResult.email;
     u.name = googleResult.givenName + ' ' + googleResult.familyName;
     u.imageUrl = googleResult.picture;
+    u.session = new Session();
     return u;
   }
 
@@ -94,6 +99,7 @@ export class User extends Base implements Safe {
     u.email = facebookResult.email;
     u.name = facebookResult.name;
     u.imageUrl = facebookResult.picture;
+    u.session = new Session();
     return u;
   }
 
@@ -104,7 +110,6 @@ export class User extends Base implements Safe {
       this.passwordDigest = hash;
       return Promise.resolve(this);
     }).catch(err => {
-      console.log(err);
       return Promise.resolve(this);
     })
   }
@@ -127,17 +132,9 @@ export class User extends Base implements Safe {
     return Promise.resolve(this);
   }
 
-
-  /** Set the user's session **/
-  setSession(session : Session) : Promise<User> {
-    this.session = session;
-    return Promise.resolve(this);
-  }
-
-
   /** Safe Json **/
   safeJson() : any {
-    let result = this.copy();
+    let result = JSON.parse(JSON.stringify(this));
     delete result.passwordDigest;
     return result;
   }

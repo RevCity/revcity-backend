@@ -5,7 +5,7 @@ import dbConnection from './db/DbConnection';
 
 // Connect to the db before anything
 dbConnection.then(conn => {
-
+  
   let expressApp = new App().express;
 
   debug('revcity-backend:server');

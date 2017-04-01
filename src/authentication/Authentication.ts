@@ -6,7 +6,6 @@ import * as BasicStrategy from 'passport-http';
 import {getConnectionManager} from 'typeorm';
 import {FacebookService} from '../services/FacebookService';
 import {GoogleService} from '../services/GoogleService';
-import {SessionsRepo} from '../repos/SessionsRepo';
 import {UsersRepo} from '../repos/UsersRepo';
 import {Session} from '../models/Session';
 import {User} from '../models/User';
@@ -20,7 +19,6 @@ export class Authentication {
   /** Private b/c this should only be used statically **/
   private constructor() {}
 
-
   /** Setup passport **/
   public static setupPassport() : void {
     // Necessary
@@ -32,14 +30,12 @@ export class Authentication {
     this.addTokenSession();
   }
 
-
   /** Serialize user to add the user to the request **/
   public static addSerializeUser() : void {
     passport.serializeUser((user: User, done) => {
       return done(null, user);
     });
   }
-
 
   /** Deserialize the user to grab it from the request **/
   public static addDeserializeUser() : void {
@@ -48,12 +44,10 @@ export class Authentication {
     });
   }
 
-
   /** Creates local sign IN strategy (Http Basic + form submission) **/
   public static addLocalSignIn() : void {
 
   }
-
 
   /** Creates Custom Authentication for Google Sign In **/
   public static addGoogleSignIn() : void {
@@ -65,11 +59,8 @@ export class Authentication {
             .then(user => {
               req.newUser = user == undefined;
               return user ?
-                Promise.resolve(user) :
+                UsersRepo.getInstance().updateUserSession(user) :
                 UsersRepo.getInstance().saveUser(User.fromGoogleSignUp(resp));
-            })
-            .then(user => {
-              return SessionsRepo.getInstance().establishSessionFromUser(user);
             })
             .then(user => {
               done(null, user);
@@ -77,7 +68,6 @@ export class Authentication {
         });
     }));
   }
-
 
   /** Creates Custom Authentication for Facebook Sign In **/
   public static addFacebookSignIn() : void {
@@ -89,11 +79,8 @@ export class Authentication {
             .then(user => {
               req.newUser = user == undefined;
               return user ?
-                Promise.resolve(user) :
+                UsersRepo.getInstance().updateUserSession(user) :
                 UsersRepo.getInstance().saveUser(User.fromFBSignUp(resp));
-            })
-            .then(user => {
-              return SessionsRepo.getInstance().establishSessionFromUser(user);
             })
             .then(user => {
               done(null, user);
@@ -101,7 +88,6 @@ export class Authentication {
         });
     }));
   }
-
 
   /** Creates Custom Authentication for Token-Based Sessions **/
   public static addTokenSession() : void {

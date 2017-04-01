@@ -2,7 +2,6 @@ import * as Promise from 'bluebird';
 import * as util from 'util';
 import {getConnectionManager, Repository} from 'typeorm';
 import {User} from '../models/User';
-import {Session} from '../models/Session';
 import {Constants} from '../utils/Constants';
 
 export class UsersRepo {
@@ -23,11 +22,23 @@ export class UsersRepo {
   /** Save user **/
   public saveUser(user: User) : Promise<User> {
     return new Promise((resolve, reject) => {
-      return this.db.persist(user).then(u => {
-        resolve(u);
+      this.db.persist(user).then(user => {
+        resolve(user);
       }).catch(err => {
         reject(err);
       })
+    }) as Promise<User>;
+  }
+
+  /** Update the user session **/
+  public updateUserSession(user: User) : Promise<User> {
+    return new Promise((resolve, reject) => {
+      user.session.update();
+      this.db.persist(user).then(user => {
+        resolve(user);
+      }).catch(err => {
+        reject(err);
+      });
     }) as Promise<User>;
   }
 
@@ -36,8 +47,14 @@ export class UsersRepo {
     return new Promise((resolve, reject) => {
       this.db.createQueryBuilder("user")
         .where("user.googleId = :googleId", { googleId: googleId })
-        .leftJoin(Session, "session", "session.user = :user.id")
         .getOne()
+        .then(user => {
+          console.log(user);
+          resolve(user);
+        })
+        .catch(err => {
+          reject(err);
+        });
     }) as Promise<User>;
   }
 
@@ -46,8 +63,14 @@ export class UsersRepo {
     return new Promise((resolve, reject) => {
       this.db.createQueryBuilder("user")
         .where("user.facebookId = :facebookId", { facebookId: facebookId })
-        .leftJoin(Session, "session", "session.user = :user.id")
         .getOne()
+        .then(user => {
+          console.log(user);
+          resolve(user);
+        })
+        .catch(err => {
+          reject(err);
+        });
     }) as Promise<User>;
   }
 
