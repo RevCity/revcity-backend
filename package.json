@@ -20,11 +20,8 @@
     "@types/mysql": "0.0.31",
     "@types/node": "^7.0.8",
     "@types/passport": "^0.3.3",
-    "dotenv": "^4.0.0",
-    "facebook-events-by-location-core": "^0.1.5",
     "gulp": "^3.9.1",
     "gulp-typescript": "^3.1.6",
-    "password-hash-and-salt": "^0.1.4",
     "ts-node": "^2.1.0",
     "typescript": "^2.2.1"
   },
@@ -42,9 +39,11 @@
     "googleapis": "^18.0.0",
     "morgan": "^1.8.1",
     "mysql": "^2.13.0",
+    "node-eventbrite": "0.0.13",
     "passport": "^0.3.2",
     "passport-custom": "^1.0.5",
     "passport-http": "^0.3.0",
+    "password-hash-and-salt": "^0.1.4",
     "serializer.ts": "0.0.12",
     "typeorm": "0.0.9"
   }

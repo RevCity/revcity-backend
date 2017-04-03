@@ -57,7 +57,6 @@ export class Session {
   /** Log out **/
   logOut() : Session {
     this.isActive = false;
-    return this; 
+    return this;
   }
-
 }

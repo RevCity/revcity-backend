@@ -93,6 +93,4 @@ export class Authentication {
   public static addTokenSession() : void {
 
   }
-
-
 }

@@ -24,5 +24,4 @@ export class Base {
   updateTimestamps() : void {
     this.updatedAt = new Date();
   }
-
 }

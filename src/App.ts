@@ -6,11 +6,12 @@ import * as passport from 'passport';
 import * as path from 'path';
 import * as logger from 'morgan';
 
-/* Authentication garbage */
+/* Authentication */
 import {Authentication} from './authentication/Authentication';
 
 /* All routes */
 import {UsersRouter} from './routes/Users';
+import {EventsRouter} from './routes/Events';
 
 class App {
 
@@ -35,6 +36,7 @@ class App {
 
   private routes(): void {
     this.express.use('/users/', new UsersRouter().router);
+    this.express.use('/events/', new EventsRouter().router);
   }
 
 }

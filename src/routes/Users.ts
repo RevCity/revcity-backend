@@ -3,8 +3,7 @@ import * as passport from 'passport';
 import {Router, Request, Response, NextFunction} from 'express';
 import {UsersRepo} from '../repos/UsersRepo';
 import {Constants} from '../utils/Constants';
-import {Success} from '../schemas/Success';
-import {Failure} from '../schemas/Failure';
+import {Success, Failure} from '../responses/Responses';
 
 export class UsersRouter {
 
@@ -18,35 +17,28 @@ export class UsersRouter {
 
   /** Setup all endpoints **/
   init() {
-
-    this.router.post(
-      '/local/new',
+    this.router.post('/local/new',
       this.localSignUp
-    )
+    );
 
-    this.router.post(
-      '/fb',
+    this.router.post('/fb',
       passport.authenticate(Constants.FB_SIGN_IN_STRATEGY),
       this.fbSignIn
     );
 
-    this.router.post(
-      '/google',
+    this.router.post('/google',
       passport.authenticate(Constants.GOOGLE_SIGN_IN_STRATEGY),
       this.googleSignIn
     );
 
-    this.router.post(
-      '/local',
+    this.router.post('/local',
       passport.authenticate(Constants.LOCAL_SIGN_IN_STRATEGY),
       this.localSignIn
-    )
+    );
 
-    this.router.get(
-      '/:id',
+    this.router.get('/:id',
       this.userById
-    )
-
+    );
   }
 
   /** Facebook Sign In (req is `any` b/c newUser info attached in passport) **/
@@ -85,6 +77,4 @@ export class UsersRouter {
         res.json(new Failure(err));
       });
   }
-
-
 }

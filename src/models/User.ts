@@ -152,5 +152,4 @@ export class User extends Base implements JsonScope {
     delete result.session;
     return result;
   }
-
 }
