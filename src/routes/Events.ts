@@ -2,6 +2,7 @@ import * as util from 'util';
 import * as passport from 'passport';
 import {Router, Request, Response, NextFunction} from 'express';
 import {FacebookService} from '../services/FacebookService';
+import {EventbriteService} from '../services/EventbriteService';
 import {Constants} from '../utils/Constants';
 import {Success, Failure} from '../responses/Responses';
 
@@ -40,8 +41,14 @@ export class EventsRouter {
 
   /** Get Eventbrite events **/
   public getEventbriteEvents(req: Request, res: Response, next: NextFunction) {
-    // TODO
-    res.json({});
+    EventbriteService.getInstance().searchEvents({
+      lat: req.query.lat,
+      lng: req.query.lng
+    }).then(events => {
+      res.json(new Success(Constants.EVENTS, events));
+    }).catch(err => {
+      res.json(new Failure(err));
+    });
   }
 
 }

@@ -4,11 +4,7 @@ import {GoogleSignInResult} from '../schemas/GoogleSignInResult';
 
 export class GoogleService {
 
-  private googleOAuth : any = new Google.auth.OAuth2(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_SECRET_KEY,
-    process.env.GOOGLE_REDIRECT_URI
-  );
+  private googleOAuth : any;
 
   /* For singleton pattern */
   private static _instance : GoogleService;
@@ -20,6 +16,11 @@ export class GoogleService {
 
   /** Constructor **/
   private constructor() {
+    this.googleOAuth = new Google.auth.OAuth2(
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_SECRET_KEY,
+      process.env.GOOGLE_REDIRECT_URI
+    );
   }
 
   /** Response to Result **/

@@ -52,8 +52,11 @@ export class FacebookService {
   public getUserFromToken(token: string) : Promise<FacebookSignInResult> {
     const fields = ['id', 'name', 'email', 'picture.type(large)'];
     let getMe : Promise<any> = new Promise((resolve, reject) => {
-      Fb.api('me', { fields: fields, access_token: token}, (data) => {
-        if (data && data.error) {
+      Fb.api('me', {
+        fields: fields,
+        access_token: token
+      }, (data) => {
+        if (!data || data.error) {
           reject(data);
         }
         resolve(data);
